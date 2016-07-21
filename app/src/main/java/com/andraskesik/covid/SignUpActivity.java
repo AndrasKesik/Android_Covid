@@ -15,7 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
     private FirebaseAuth mAuth;
@@ -45,8 +45,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         };
-
-
     }
 
     @Override
@@ -68,6 +66,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void createUser(String email, String password) {
+        showProgressDialog();
+        if(!isRegistrationValid()) return;
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -81,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(SignUpActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
+                        hideProgressDialog();
                         // ...
                     }
                 });
@@ -92,9 +93,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_register:
-                if (isRegistrationValid()) {
                     createUser(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
-                }
+
         }
     }
 

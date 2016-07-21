@@ -10,8 +10,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class StartActivity extends AppCompatActivity implements View.OnClickListener  {
+public class StartActivity extends BaseActivity implements View.OnClickListener  {
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +25,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.button_start_signin).setOnClickListener(this);
         findViewById(R.id.button_start_signup).setOnClickListener(this);
-        findViewById(R.id.button_start_resetPassword).setOnClickListener(this);
+
 
 
     }
-
-
-
-
-
-
 
     @Override
     public void onClick(View view) {
@@ -39,9 +38,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 return;
             case R.id.button_start_signup:
                 startActivity(new Intent(this, SignUpActivity.class));
-                return;
-            case R.id.button_start_resetPassword:
-                Toast.makeText(StartActivity.this, "Reset Password", Toast.LENGTH_SHORT).show();
                 return;
         }
     }
