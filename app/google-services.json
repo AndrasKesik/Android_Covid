@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "467203747425",
+    "firebase_url": "https://covid-c897b.firebaseio.com",
+    "project_id": "covid-c897b",
+    "storage_bucket": "covid-c897b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467203747425:android:2eb1b436002f14e1",
+        "android_client_info": {
+          "package_name": "com.andraskesik.covid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467203747425-j10u1kehs2qre34s434gr3b93pciqe65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.andraskesik.covid",
+            "certificate_hash": "2765BE81CD811FA35FF0230E9ECDC4ECD2B2F596"
+          }
+        },
+        {
+          "client_id": "467203747425-h67s6e7n7g0pdbsn0kl4lk04jm80r4uv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkKyfjbIE0ggUX7-Jygd2cMUFqLlFpnns"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467203747425-h67s6e7n7g0pdbsn0kl4lk04jm80r4uv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
