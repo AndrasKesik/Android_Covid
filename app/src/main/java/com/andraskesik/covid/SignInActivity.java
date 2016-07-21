@@ -30,11 +30,13 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        findViewById(R.id.button_login).setOnClickListener(this);
-        findViewById(R.id.textView_resetPassword).setOnClickListener(this);
+        setTitle("Sign In");
 
-        mEmailField = (EditText) findViewById(R.id.editText_login_email);
-        mPasswordField = (EditText) findViewById(R.id.editText_login_password);
+        findViewById(R.id.button_login).setOnClickListener(this);
+//        findViewById(R.id.textView_resetPassword).setOnClickListener(this);
+
+//        mEmailField = (EditText) findViewById(R.id.editText_login_email);
+//        mPasswordField = (EditText) findViewById(R.id.editText_login_password);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -109,7 +111,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         switch (view.getId()) {
             case R.id.button_login:
                 signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-            case R.id.textView_resetPassword:
+//            case R.id.textView_resetPassword:
 //                resetPassword();
         }
     }

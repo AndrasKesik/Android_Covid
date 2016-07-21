@@ -22,6 +22,7 @@ public class StartActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        setTitle("");
 
         findViewById(R.id.button_start_signin).setOnClickListener(this);
         findViewById(R.id.button_start_signup).setOnClickListener(this);
