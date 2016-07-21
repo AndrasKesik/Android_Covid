@@ -3,6 +3,7 @@ package com.andraskesik.covid;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,8 +22,8 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     private static final String TAG = SignInActivity.class.getSimpleName();
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private EditText mEmailField;
-    private EditText mPasswordField;
+    private TextInputLayout mEmailField;
+    private TextInputLayout mPasswordField;
 
 
     @Override
@@ -33,10 +34,10 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         setTitle("Sign In");
 
         findViewById(R.id.button_login).setOnClickListener(this);
-//        findViewById(R.id.textView_resetPassword).setOnClickListener(this);
+        findViewById(R.id.button_resetPassword).setOnClickListener(this);
 
-//        mEmailField = (EditText) findViewById(R.id.editText_login_email);
-//        mPasswordField = (EditText) findViewById(R.id.editText_login_password);
+        mEmailField = (TextInputLayout) findViewById(R.id.field_login_email);
+        mPasswordField = (TextInputLayout) findViewById(R.id.field_login_password);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -46,7 +47,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                    startActivity(new Intent(SignInActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -71,6 +72,9 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void signIn(String email, String password) {
+        if(email.equals("") || password.equals("")) {
+            Toast.makeText(SignInActivity.this, "Write something if you want to login", Toast.LENGTH_SHORT).show();
+            return;}
         showProgressDialog();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -92,7 +96,8 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void resetPassword() {
-        String emailAddress = mEmailField.getText().toString();
+        String emailAddress = mEmailField.getEditText().getText().toString();
+        if(emailAddress.equals("")) return;
         mAuth.sendPasswordResetEmail(emailAddress)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -110,9 +115,12 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_login:
-                signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-//            case R.id.textView_resetPassword:
-//                resetPassword();
+                signIn(mEmailField.getEditText().getText().toString(), mPasswordField.getEditText().getText().toString());
+                return;
+            case R.id.button_resetPassword:
+                resetPassword();
+                return;
+
         }
     }
 

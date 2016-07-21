@@ -39,27 +39,18 @@ public class LoginDataFragment extends Fragment implements View.OnClickListener 
         mEmail =  (TextInputLayout) view.findViewById(R.id.field_register_email);
         mPassword = (TextInputLayout) view.findViewById(R.id.field_register_password);
 
-
         return view;
     }
-
-    private void saveDatatoUser() {
-        mUser.setMail(mEmail.getEditText().getText().toString());
-
-
-    }
-
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_register_logindata:
-                saveDatatoUser();
-                ((SignUpActivity) getActivity()).createUser(mEmail.getEditText().getText().toString(),
+                ((SignUpActivity) getActivity()).createUser(mUser,
+                                                            mEmail.getEditText().getText().toString(),
                                                             mPassword.getEditText().getText().toString());
-                Toast.makeText(getActivity(), mUser.toString(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "User createed: " + mUser.toString());
+
         }
     }
 }

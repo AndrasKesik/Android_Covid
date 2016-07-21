@@ -1,11 +1,12 @@
 package com.andraskesik.covid.model;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by andra on 2016-07-21.
- */
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class User implements Parcelable {
 
     private String name;
@@ -13,11 +14,9 @@ public class User implements Parcelable {
     private String city;
     private String country;
     private String introduction;
-    private String mail;
 
     public User() {
     }
-
 
     public String getName() {
         return name;
@@ -59,24 +58,14 @@ public class User implements Parcelable {
         this.introduction = introduction;
     }
 
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-
     @Override
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", age=" + age +
+                ", age='" + age + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
                 ", introduction='" + introduction + '\'' +
-                ", mail='" + mail + '\'' +
                 '}';
     }
 
@@ -86,7 +75,6 @@ public class User implements Parcelable {
         city = in.readString();
         country = in.readString();
         introduction = in.readString();
-        mail = in.readString();
     }
 
     @Override
@@ -101,7 +89,6 @@ public class User implements Parcelable {
         dest.writeString(city);
         dest.writeString(country);
         dest.writeString(introduction);
-        dest.writeString(mail);
     }
 
     @SuppressWarnings("unused")

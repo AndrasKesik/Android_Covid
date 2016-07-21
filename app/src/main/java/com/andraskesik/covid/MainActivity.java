@@ -10,9 +10,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.andraskesik.covid.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -24,17 +31,21 @@ public class MainActivity extends BaseActivity{
     private FirebaseUser mFirebaseUser;
 
     private TextView textView;
+    private DatabaseReference mDatabase;
+    private DatabaseReference mUserRef;
+
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         textView = (TextView) findViewById(R.id.textview_mainactivity);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //Check if user is logged in
         if (mFirebaseUser == null) {
@@ -42,9 +53,10 @@ public class MainActivity extends BaseActivity{
             startActivity(new Intent(this, StartActivity.class));
             finish();
             return;
-        } {
-            textView.setText("Welcome " + mFirebaseUser.getEmail());
         }
+
+        getUserFromDb();
+
 
         // Firebase Auth_state_listener
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -60,6 +72,32 @@ public class MainActivity extends BaseActivity{
                 }
             }
         };
+    }
+
+    private void getUserFromDb() {
+        showProgressDialog();
+        mDatabase.child("users").child(mFirebaseUser.getUid())
+                .addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        mUser = dataSnapshot.getValue(User.class);
+
+                        if (mUser == null) {
+                            Log.e(TAG, "User is unexpectedly null");
+                            Toast.makeText(MainActivity.this,
+                                    "Error: could not fetch user.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            textView.setText("Welcome " + mUser.getName() + "! :)");
+                        }
+                        hideProgressDialog();
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                    }
+                });
     }
 
 
@@ -96,7 +134,5 @@ public class MainActivity extends BaseActivity{
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 
 }

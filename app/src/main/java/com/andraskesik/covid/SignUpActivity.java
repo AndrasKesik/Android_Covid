@@ -26,6 +26,7 @@ public class SignUpActivity extends BaseActivity{
     public static final String USER = "USER";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mDatabase;
     private FragmentManager mFragmentManager;
     private User mUser;
 
@@ -49,55 +50,22 @@ public class SignUpActivity extends BaseActivity{
 
 
         //Firrebase Database init
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbRef = database.getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         //Firebase auth init
         mAuth = FirebaseAuth.getInstance();
-        //Firebase auth_state_listener
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                    finish();
-                } else {
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
-
-
-
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-
-
-    public void createUser(String email, String password) {
+    public void createUser(final User user, final String email, String password) {
         showProgressDialog();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -105,11 +73,33 @@ public class SignUpActivity extends BaseActivity{
                             Toast.makeText(SignUpActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
+                        onAuthSuccess(task.getResult().getUser());
                         hideProgressDialog();
                         // ...
                     }
                 });
 
+
+    }
+
+    private void onAuthSuccess(FirebaseUser user) {
+        String username = usernameFromEmail(user.getEmail());
+
+        // Write new user
+        mDatabase.child("users").child(user.getUid()).setValue(mUser);
+
+        Log.d(TAG, "User created: " + mUser.toString());
+        // Go to MainActivity
+        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+        finish();
+    }
+
+    private String usernameFromEmail(String email) {
+        if (email.contains("@")) {
+            return email.split("@")[0];
+        } else {
+            return email;
+        }
     }
 
 
