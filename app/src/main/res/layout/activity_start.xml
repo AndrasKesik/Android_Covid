@@ -9,27 +9,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.andraskesik.covid.StartActivity">
 
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset password"
+        android:id="@+id/button_start_resetPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        >
+        android:layout_above="@id/button_start_resetPassword"
+        android:id="@+id/linearLayout">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Sign In"
-            android:id="@+id/button_signin" />
+            android:id="@+id/button_start_signin" />
 
         <Button
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign Up"
-            android:id="@+id/button_signup" />
+            android:id="@+id/button_start_signup" />
     </LinearLayout>
 
     <TextView
@@ -41,5 +51,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="75dp"
         android:textSize="32sp" />
+
+
 
 </RelativeLayout>
