@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FirebaseAuth mAuth;
@@ -79,12 +79,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
 
-
-    @Override
-    public void onClick(View view) {
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -102,4 +96,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

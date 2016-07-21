@@ -2,6 +2,7 @@ package com.andraskesik.covid;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,9 +31,11 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_sign_in);
 
         findViewById(R.id.button_login).setOnClickListener(this);
+        findViewById(R.id.textView_resetPassword).setOnClickListener(this);
 
         mEmailField = (EditText) findViewById(R.id.editText_login_email);
         mPasswordField = (EditText) findViewById(R.id.editText_login_password);
+
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -42,6 +45,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                 if (user != null) {
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                    finish();
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -85,14 +89,32 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                 });
     }
 
+    private void resetPassword() {
+        String emailAddress = mEmailField.getText().toString();
+        mAuth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+//                            Snackbar.make(, "Email sent", Snackbar.LENGTH_LONG).show();
+                            Toast.makeText(SignInActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_login:
                 signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-
+            case R.id.textView_resetPassword:
+//                resetPassword();
         }
     }
+
+
 
 
 }

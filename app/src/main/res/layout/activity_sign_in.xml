@@ -35,8 +35,7 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/button_login"
-        android:layout_marginTop="87dp"
-        android:layout_below="@+id/editText_login_password"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -47,5 +46,16 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset Password"
+        android:id="@+id/textView_resetPassword"
+        android:layout_above="@+id/button_login"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:textColor="#3997c3"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>
