@@ -1,10 +1,7 @@
 package com.andraskesik.covid.main_fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,13 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.andraskesik.covid.MainActivity;
@@ -31,13 +25,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by andra on 2016-07-22.
@@ -45,31 +33,78 @@ import java.util.List;
 public class UploadFragment extends Fragment implements View.OnClickListener{
 
     private static final String TAG = UploadFragment.class.getSimpleName();
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    public static final int REQUEST_IMAGE_CAPTURE = 1;
+    public static final int REQUEST_VIDEO_CAPTURE = 2;
+    private static final String UPLOADSTATE = "upload_state";
+    private static final String CURRENT_FILE_PATH = "current_file_path";
+
+    private MainActivity mAct;
 
     private StorageReference mStorageRef;
     public Uri mDownloadUrl = null;
 
-    private ImageView mImageView;
+    private Uri mCurrentUri;
+    private Button mUploadButton;
+    private boolean isUploadVisible;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_upload, container, false);
-        getActivity().setTitle("Upload your video");
+        mAct = ((MainActivity) getActivity());
+        mAct.setTitle("Upload your video");
+
+        mUploadButton = (Button) view.findViewById(R.id.button_upload);
+        hideUpload();
+
+        if (savedInstanceState != null) {
+            isUploadVisible = savedInstanceState.getBoolean(UPLOADSTATE);
+            mCurrentUri = savedInstanceState.getParcelable(CURRENT_FILE_PATH);
+            if (isUploadVisible) mUploadButton.setVisibility(View.VISIBLE);
+            else mUploadButton.setVisibility(View.GONE);
+        }
+
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReferenceFromUrl("gs://covid-c897b.appspot.com/");
 
 
+
+
+        mUploadButton.setOnClickListener(this);
         view.findViewById(R.id.button_makePicture).setOnClickListener(this);
         view.findViewById(R.id.button_makeVideo).setOnClickListener(this);
         view.findViewById(R.id.button_chooseFromGallery).setOnClickListener(this);
 
 
-        mImageView = (ImageView) view.findViewById(R.id.imageView_result);
+
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(UPLOADSTATE,isUploadVisible);
+        outState.putParcelable(CURRENT_FILE_PATH, mCurrentUri );
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            showUpload();
+            mCurrentUri = data.getData();
+
+            Log.w(TAG, "________________PHOTO TAKEN____________");
+            Log.d(TAG, mCurrentUri.toString());
+        } else if(requestCode == REQUEST_VIDEO_CAPTURE && resultCode == Activity.RESULT_OK) {
+            showUpload();
+            mCurrentUri = data.getData();
+            Log.w(TAG, "________________VIDEO TAKEN____________");
+            Log.d(TAG, mCurrentUri.toString());
+
+        }
+
     }
 
     private ArrayList<String> extractFilesFromLocalStorage(final String fileExtension) {
@@ -89,31 +124,30 @@ public class UploadFragment extends Fragment implements View.OnClickListener{
 
     private void makePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(mAct.getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
-
     }
-
 
     private void makeVideo() {
-    }
-
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            mImageView.setImageBitmap(imageBitmap);
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(mAct.getPackageManager()) != null) {
+            takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 5);
+            takeVideoIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, 0);
+            takeVideoIntent.putExtra(android.provider.MediaStore.EXTRA_VIDEO_QUALITY, 0);
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
     }
 
-    private void upLoadFile(String fileName){
-        ((MainActivity) getActivity()).showProgressDialog();
-        Uri file = Uri.fromFile(new File(fileName));
-        StorageReference riversRef = mStorageRef.child("files/"+file.getLastPathSegment());
+
+
+
+
+
+    private void upLoadFile(Uri file){
+        mAct.showProgressDialog();
+        if(file == null) Log.d(TAG, "FILE IS NULL");
+        StorageReference riversRef = mStorageRef.child("videos/"+file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
 // Register observers to listen for when the download is done or if it fails
@@ -128,7 +162,8 @@ public class UploadFragment extends Fragment implements View.OnClickListener{
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 mDownloadUrl = taskSnapshot.getDownloadUrl();
                 Log.d(TAG, "fileUploadSucces: " + mDownloadUrl);
-                ((MainActivity) getActivity()).hideProgressDialog();
+                hideUpload();
+                mAct.hideProgressDialog();
 
             }
         });
@@ -145,11 +180,24 @@ public class UploadFragment extends Fragment implements View.OnClickListener{
                 makeVideo();
                 break;
             case R.id.button_chooseFromGallery:
-                Toast.makeText(getActivity(), "choosefromGallery", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mAct, "choosefromGallery", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.button_upload:
+                upLoadFile(mCurrentUri);
+                Toast.makeText(mAct, "Uploaded", Toast.LENGTH_SHORT).show();
                 break;
 
-
         }
+    }
+
+    private void showUpload() {
+        mUploadButton.setVisibility(View.VISIBLE);
+        isUploadVisible = true;
+    }
+
+    private void hideUpload() {
+        mUploadButton.setVisibility(View.GONE);
+        isUploadVisible = false;
     }
 
 

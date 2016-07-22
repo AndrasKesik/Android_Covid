@@ -1,8 +1,11 @@
 package com.andraskesik.covid;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -217,7 +220,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void getUserFromDb() {
-        showProgressDialog();
         mDatabase.child("users").child(mFirebaseUser.getUid())
                 .addListenerForSingleValueEvent(
                         new ValueEventListener() {
@@ -234,7 +236,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                     drawerName.setText(mUser.getName());
                                     drawerEmail.setText(mFirebaseUser.getEmail());
                                 }
-                                hideProgressDialog();
                             }
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
@@ -268,4 +269,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
+
+
 }
