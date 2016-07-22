@@ -18,6 +18,7 @@ public class UploadFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_upload, container, false);
+        getActivity().setTitle("Upload your video");
         return view;
     }
 }

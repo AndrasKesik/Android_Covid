@@ -16,8 +16,6 @@
             android:title="Watch Later" />
 
 
-    <item android:title="Share your experience">
-        <menu>
             <item
                 android:id="@+id/nav_upload"
                 android:icon="@drawable/ic_file_upload_black_24dp"
@@ -26,8 +24,6 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share_black_24dp"
                 android:title="Share" />
-        </menu>
-    </item>
 
     </group>
 
