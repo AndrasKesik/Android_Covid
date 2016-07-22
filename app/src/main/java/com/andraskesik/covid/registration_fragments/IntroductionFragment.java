@@ -19,15 +19,22 @@ import org.w3c.dom.Text;
  * Created by andra on 2016-07-21.
  */
 public class IntroductionFragment extends Fragment implements View.OnClickListener{
+    private SignUpActivity mActivity;
     private User mUser;
     private TextInputLayout mIntroduction;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        mActivity = (SignUpActivity) getActivity();
+
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mUser = getArguments().getParcelable(SignUpActivity.USER);
         View view = inflater.inflate(R.layout.fragment_register_introduction, container, false);
-        getActivity().setTitle("Introdcution");
+        mActivity.setTitle("Introdcution");
 
         mIntroduction = (TextInputLayout) view.findViewById(R.id.field_register_introduction);
 
@@ -36,20 +43,29 @@ public class IntroductionFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
+    @Override
+    public void onResume() {
+        if (mActivity.getmUser().getIntroduction() != null) mIntroduction.getEditText().setText(mActivity.getmUser().getIntroduction());
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        saveDatatoUser();
+        super.onPause();
+    }
+
     private void callIntroductionFragment() {
-        LoginDataFragment loginDataFragment = new LoginDataFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(SignUpActivity.USER,mUser);
-        loginDataFragment.setArguments(bundle);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+//        mActivity.setmContent(new LoginDataFragment());
+        mActivity.getSupportFragmentManager()
+                .beginTransaction()
                 .addToBackStack(null)
-                .replace(R.id.placeHolder_signup, loginDataFragment)
+                .replace(R.id.placeHolder_signup, new LoginDataFragment())
                 .commit();
     }
 
     private void saveDatatoUser() {
-        mUser.setIntroduction(mIntroduction.getEditText().getText().toString());
+        mActivity.getmUser().setIntroduction(mIntroduction.getEditText().getText().toString());
 
     }
 

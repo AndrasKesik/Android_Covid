@@ -22,17 +22,18 @@ import com.google.firebase.auth.AuthResult;
  * Created by andra on 2016-07-21.
  */
 public class LoginDataFragment extends Fragment implements View.OnClickListener {
+
     private static final String TAG = LoginDataFragment.class.getSimpleName();
-    private User mUser;
+    private SignUpActivity mActivity;
     private TextInputLayout mEmail;
     private TextInputLayout mPassword;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mUser = getArguments().getParcelable(SignUpActivity.USER);
+        mActivity = (SignUpActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_register_logindata, container, false);
-        getActivity().setTitle("Register & Login");
+        mActivity.setTitle("Register & Login");
 
         view.findViewById(R.id.button_register_logindata).setOnClickListener(this);
 
@@ -47,9 +48,13 @@ public class LoginDataFragment extends Fragment implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_register_logindata:
-                ((SignUpActivity) getActivity()).createUser(mUser,
-                                                            mEmail.getEditText().getText().toString(),
-                                                            mPassword.getEditText().getText().toString());
+                Log.d(TAG, mActivity.getmUser().toString());
+                Toast.makeText(getActivity(), mActivity.getmUser().toString(), Toast.LENGTH_SHORT).show();
+
+//                ((SignUpActivity) getActivity()).createUser(mUser,
+//                                                            mEmail.getEditText().getText().toString(),
+//                                                            mPassword.getEditText().getText().toString());
+                break;
 
         }
     }

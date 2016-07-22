@@ -2,6 +2,7 @@ package com.andraskesik.covid;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.andraskesik.covid.main_fragments.GalleryFragment;
 import com.andraskesik.covid.model.User;
 import com.andraskesik.covid.registration_fragments.PersonalInfoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +30,7 @@ public class SignUpActivity extends BaseActivity{
     private DatabaseReference mDatabase;
     private FragmentManager mFragmentManager;
     private User mUser;
+    private Fragment mContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +39,35 @@ public class SignUpActivity extends BaseActivity{
 
         mUser = new User();
 
-        PersonalInfoFragment personalInfoFragment= new PersonalInfoFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(USER,mUser);
-        personalInfoFragment.setArguments(bundle);
         //Views
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.beginTransaction()
-                .replace(R.id.placeHolder_signup, personalInfoFragment)
-                .commit();
-
+        if (savedInstanceState != null ){
+            mUser = savedInstanceState.getParcelable(USER);
+            Log.d(TAG, "User restored: " + mUser.toString());
+//            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.placeHolder_signup, mContent)
+//                    .commit();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.placeHolder_signup, new PersonalInfoFragment())
+                    .commit();
+        }
 
 
         //Firrebase Database init
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-
         //Firebase auth init
         mAuth = FirebaseAuth.getInstance();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState");
+        outState.putParcelable(USER, mUser);
+        super.onSaveInstanceState(outState);
     }
 
 
@@ -101,6 +114,24 @@ public class SignUpActivity extends BaseActivity{
         }
     }
 
+    public void callNextFragment(){
 
 
+    }
+
+    public Fragment getmContent() {
+        return mContent;
+    }
+
+    public void setmContent(Fragment mContent) {
+        this.mContent = mContent;
+    }
+
+    public User getmUser() {
+        return mUser;
+    }
+
+    public void setmUser(User mUser) {
+        this.mUser = mUser;
+    }
 }

@@ -4,9 +4,11 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -40,9 +42,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.Set;
+
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String RECENT_FRAGMENT = "RECENT_FRAGMENT";
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -58,6 +63,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Toolbar toolbar;
     private TextView drawerName;
     private TextView drawerEmail;
+    private Fragment mContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +77,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setStatusBarTranslucent(true);
 
         //Get the content for the UI
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container_main, new GalleryFragment())
-                .commit();
+        if (savedInstanceState != null ){
+            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_main, mContent)
+                    .commit();
+        } else {
+            mContent = new GalleryFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_main, mContent)
+                    .commit();
+        }
+
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
@@ -107,12 +122,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-
-
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -160,28 +179,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_gallery:
+                mContent = new GalleryFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new GalleryFragment())
+                        .replace(R.id.fragment_container_main, mContent)
                         .commit();
                 break;
             case R.id.nav_videobox:
+                mContent = new VideoBoxFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new VideoBoxFragment())
+                        .replace(R.id.fragment_container_main, mContent)
                         .commit();
                 break;
             case R.id.nav_watchlater:
+                mContent = new WatchLaterFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new WatchLaterFragment())
+                        .replace(R.id.fragment_container_main, mContent)
                         .commit();
                 break;
             case R.id.nav_upload:
+                mContent = new UploadFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new UploadFragment())
+                        .replace(R.id.fragment_container_main, mContent)
                         .commit();
+
                 break;
             case R.id.nav_share:
+                mContent = new ShareFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_main, new ShareFragment())
+                        .replace(R.id.fragment_container_main, mContent)
                         .commit();
                 break;
 

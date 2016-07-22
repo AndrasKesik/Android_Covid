@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <TextView
+    <ImageView
+        android:id="@+id/imageView_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal"
-        android:textSize="24sp" />
-</LinearLayout>
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+
+        >
+
+        <Button
+            android:id="@+id/button_makePicture"
+            android:text="Make Picture Now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/button_makeVideo"
+            android:text="Make Video Now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/button_chooseFromGallery"
+            android:text="Choose From Gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>
