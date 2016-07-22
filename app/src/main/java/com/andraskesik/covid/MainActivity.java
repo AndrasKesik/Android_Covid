@@ -1,17 +1,31 @@
 package com.andraskesik.covid;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andraskesik.covid.main_fragments.GalleryFragment;
+import com.andraskesik.covid.main_fragments.ShareFragment;
+import com.andraskesik.covid.main_fragments.UploadFragment;
+import com.andraskesik.covid.main_fragments.VideoBoxFragment;
+import com.andraskesik.covid.main_fragments.WatchLaterFragment;
 import com.andraskesik.covid.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,25 +37,40 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    //Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mFirebaseUser;
-
-    private TextView textView;
     private DatabaseReference mDatabase;
     private DatabaseReference mUserRef;
 
     private User mUser;
+
+    //UI elements
+    private DrawerLayout drawer;
+    private Toolbar toolbar;
+    private TextView drawerName;
+    private TextView drawerEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.textview_mainactivity);
+        //Setup UI
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setupDrawer();
+        setStatusBarTranslucent(true);
+
+        //Get the content for the UI
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container_main, new GalleryFragment())
+                .commit();
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
@@ -74,31 +103,7 @@ public class MainActivity extends BaseActivity{
         };
     }
 
-    private void getUserFromDb() {
-        showProgressDialog();
-        mDatabase.child("users").child(mFirebaseUser.getUid())
-                .addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        mUser = dataSnapshot.getValue(User.class);
 
-                        if (mUser == null) {
-                            Log.e(TAG, "User is unexpectedly null");
-                            Toast.makeText(MainActivity.this,
-                                    "Error: could not fetch user.",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            textView.setText("Welcome " + mUser.getName() + "! :)");
-                        }
-                        hideProgressDialog();
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-                    }
-                });
-    }
 
 
     @Override
@@ -115,7 +120,14 @@ public class MainActivity extends BaseActivity{
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,9 +142,102 @@ public class MainActivity extends BaseActivity{
             case R.id.item_mainmenu_signout:
                 FirebaseAuth.getInstance().signOut();
                 return true;
+            case R.id.item_mainmenu_about:
+                return true;
+            case R.id.user_settings:
+                startActivity(new Intent(this, SettingsActivity.class).putExtra(USER, mUser));
+//                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+            case R.id.nav_gallery:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_main, new GalleryFragment())
+                        .commit();
+                break;
+            case R.id.nav_videobox:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_main, new VideoBoxFragment())
+                        .commit();
+                break;
+            case R.id.nav_watchlater:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_main, new WatchLaterFragment())
+                        .commit();
+                break;
+            case R.id.nav_upload:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_main, new UploadFragment())
+                        .commit();
+                break;
+            case R.id.nav_share:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_main, new ShareFragment())
+                        .commit();
+                break;
+
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void getUserFromDb() {
+        showProgressDialog();
+        mDatabase.child("users").child(mFirebaseUser.getUid())
+                .addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                mUser = dataSnapshot.getValue(User.class);
+
+                                if (mUser == null) {
+                                    Log.e(TAG, "User is unexpectedly null");
+                                    Toast.makeText(MainActivity.this,
+                                            "Error: could not fetch user.",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    drawerName.setText(mUser.getName());
+                                    drawerEmail.setText(mFirebaseUser.getEmail());
+                                }
+                                hideProgressDialog();
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                            }
+                        });
+    }
+
+    private void setupDrawer() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View headerLayout = navigationView.getHeaderView(0);
+        drawerName = (TextView) headerLayout.findViewById(R.id.nav_user_name);
+        drawerEmail = (TextView) headerLayout.findViewById(R.id.nav_user_email);
+    }
+
+    protected void setStatusBarTranslucent(boolean makeTranslucent) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            Log.d(TAG, "setStatusBarTranslucent:current_version_is_below_API19");
+            return;
+        }
+        if (makeTranslucent) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+    }
 }

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class BaseActivity extends AppCompatActivity {
 
-
+    public static final String USER = "USER";
     private ProgressDialog mProgressDialog;
 
     public void showProgressDialog() {

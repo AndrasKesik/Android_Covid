@@ -23,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SignUpActivity extends BaseActivity{
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
-    public static final String USER = "USER";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
