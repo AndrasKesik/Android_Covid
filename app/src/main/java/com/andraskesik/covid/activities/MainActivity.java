@@ -23,7 +23,7 @@ import com.andraskesik.covid.R;
 import com.andraskesik.covid.main_fragments.GalleryFragment;
 import com.andraskesik.covid.main_fragments.ShareFragment;
 import com.andraskesik.covid.main_fragments.UploadFragment;
-import com.andraskesik.covid.main_fragments.VideoBoxFragment;
+import com.andraskesik.covid.main_fragments.MyVideos;
 import com.andraskesik.covid.main_fragments.WatchLaterFragment;
 import com.andraskesik.covid.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -174,7 +174,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         .commit();
                 break;
             case R.id.nav_videobox:
-                mContent = new VideoBoxFragment();
+                mContent = new MyVideos();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_main, mContent)
                         .commit();

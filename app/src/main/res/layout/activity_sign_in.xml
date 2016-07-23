@@ -73,21 +73,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:background="#AED581"
+            android:background="#2E7D32"
             android:text="LOGIN"
             android:textSize="20sp"/>
     </android.support.v7.widget.CardView>
 
     <Button
+        android:layout_marginTop="8dp"
         android:id="@+id/button_resetPassword"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-
+        android:textColor="@android:color/darker_gray"
         android:layout_below="@id/button_login"
         android:text="Reset Password"
-        android:textSize="10sp" />
+        android:textSize="12sp" />
 
 
 </RelativeLayout>

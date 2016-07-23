@@ -11,6 +11,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/colorPrimary"
         android:text="Next" />
 
 

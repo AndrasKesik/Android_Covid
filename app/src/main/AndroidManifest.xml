@@ -26,8 +26,7 @@
             android:theme="@style/LoginTheme"/>
         <activity android:name=".activities.SignInActivity"
             android:theme="@style/LoginTheme"/>
-        <activity android:name=".activities.StartActivity"
-            android:theme="@style/LoginTheme"/>
+        <activity android:name=".activities.StartActivity" />
 
         <activity android:name=".activities.SettingsActivity"
             android:parentActivityName=".activities.MainActivity"/>

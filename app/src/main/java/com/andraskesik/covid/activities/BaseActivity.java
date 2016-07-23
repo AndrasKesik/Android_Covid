@@ -3,6 +3,8 @@ package com.andraskesik.covid.activities;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 
+import com.andraskesik.covid.R;
+
 /**
  * Created by andra on 2016-07-21.
  */

@@ -13,10 +13,7 @@ import android.view.ViewGroup;
 import com.andraskesik.covid.R;
 import com.andraskesik.covid.VideoViewHolder;
 import com.andraskesik.covid.activities.MainActivity;
-import com.andraskesik.covid.model.User;
 import com.andraskesik.covid.model.Video;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,14 +22,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by andra on 2016-07-22.
  */
-public class VideoBoxFragment extends Fragment {
+public class MyVideos extends Fragment {
 
-    private static final String TAG = VideoBoxFragment.class.getSimpleName();
+    private static final String TAG = MyVideos.class.getSimpleName();
     private DatabaseReference mDatabase;
     private MainActivity mAct;
     private DatabaseReference mRef;
@@ -42,9 +38,9 @@ public class VideoBoxFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_main_videobox, container, false);
+        final View view = inflater.inflate(R.layout.fragment_main_myvideos, container, false);
         mAct = (MainActivity) getActivity();
-        mAct.setTitle("Your video box");
+        mAct.setTitle("Your videos");
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mRef = mDatabase.child("videos");
 
@@ -76,7 +72,7 @@ public class VideoBoxFragment extends Fragment {
     }
 
     private void makeRecyclerView(View view) {
-        RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView_videoBox);
+        RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView_myVideos);
 //        recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(mAct));
         mAdapter = new RecyclerView.Adapter<VideoViewHolder>() {
