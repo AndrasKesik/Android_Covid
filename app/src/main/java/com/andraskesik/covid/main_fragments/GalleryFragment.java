@@ -1,9 +1,11 @@
 package com.andraskesik.covid.main_fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,7 +52,8 @@ public class GalleryFragment extends Fragment {
 //        Intent categoryIntent = new Intent(getActivity(), CategoryActivity.class);
 //        categoryIntent.putExtra(CategoryActivity.CATEGORY, "Personal");
 //        startActivity(categoryIntent);
-
+        CardView cardView = (CardView) view.findViewById(R.id.gallery_welcome);
+        cardView.setElevation(50f);
 
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView_gallery);
 //        recycler.setHasFixedSize(true);
@@ -77,6 +80,8 @@ public class GalleryFragment extends Fragment {
                     }
                 });
                 holder.setLabelText(CovidConstants.CATEGORIES[position]);
+                Drawable picture = getResources().getDrawable(CovidConstants.PICTUREIDS[position]);
+                holder.setBackgroundImage(picture);
                 Log.d(TAG, "populateviewHolder___________________");
             }
 

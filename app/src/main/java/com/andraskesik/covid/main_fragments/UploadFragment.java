@@ -256,6 +256,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
 
 
     private void showUpload() {
+        mDescription.getEditText().setText("");
         mUploadView.setVisibility(View.VISIBLE);
         isUploadVisible = true;
     }

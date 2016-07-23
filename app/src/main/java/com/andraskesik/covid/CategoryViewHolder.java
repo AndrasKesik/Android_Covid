@@ -1,6 +1,8 @@
 package com.andraskesik.covid;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,9 +26,9 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
         field.setText(name);
     }
 
-    public void setBackgroundImage(Bitmap bitmap) {
-//        ImageView field = (ImageView) mView.findViewById(R.id.list_item_background_img);
-//        field.setText(text);
+    public void setBackgroundImage(Drawable drawable) {
+        ImageView field = (ImageView) mView.findViewById(R.id.list_item_background_img);
+        field.setImageDrawable(drawable);
     }
 
     public void setListener(ICatgoryViewHolderClicks listener) {

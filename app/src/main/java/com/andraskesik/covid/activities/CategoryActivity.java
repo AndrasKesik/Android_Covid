@@ -30,9 +30,6 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
         mCategory = getIntent().getStringExtra(CATEGORY);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         setTitle(mCategory + " Videos");
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
