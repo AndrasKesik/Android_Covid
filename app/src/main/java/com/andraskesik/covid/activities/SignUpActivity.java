@@ -1,17 +1,12 @@
-package com.andraskesik.covid;
+package com.andraskesik.covid.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.andraskesik.covid.main_fragments.GalleryFragment;
+import com.andraskesik.covid.R;
 import com.andraskesik.covid.model.User;
 import com.andraskesik.covid.registration_fragments.PersonalInfoFragment;
 import com.google.android.gms.tasks.OnCompleteListener;

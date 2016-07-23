@@ -4,16 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.andraskesik.covid.R;
-import com.andraskesik.covid.SignUpActivity;
+import com.andraskesik.covid.activities.SignUpActivity;
 import com.andraskesik.covid.model.User;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by andra on 2016-07-21.

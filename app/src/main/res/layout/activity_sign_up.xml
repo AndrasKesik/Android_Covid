@@ -4,6 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/placeHolder_signup"
-    tools:context="com.andraskesik.covid.SignUpActivity">
+    tools:context=".activities.SignUpActivity">
 
 </FrameLayout>

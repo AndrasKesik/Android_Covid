@@ -10,4 +10,11 @@
         android:id="@+id/textView3"
         android:layout_gravity="center_horizontal"
         android:textSize="24sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_videoBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

@@ -1,17 +1,15 @@
 package com.andraskesik.covid.registration_fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.andraskesik.covid.R;
-import com.andraskesik.covid.SignUpActivity;
+import com.andraskesik.covid.activities.SignUpActivity;
 import com.andraskesik.covid.model.User;
 
 public class PersonalInfoFragment extends Fragment implements View.OnClickListener {

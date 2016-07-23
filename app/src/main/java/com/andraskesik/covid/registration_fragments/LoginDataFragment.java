@@ -1,7 +1,6 @@
 package com.andraskesik.covid.registration_fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -9,14 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.andraskesik.covid.R;
-import com.andraskesik.covid.SignUpActivity;
-import com.andraskesik.covid.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.andraskesik.covid.activities.SignUpActivity;
 
 /**
  * Created by andra on 2016-07-21.

@@ -19,14 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.andraskesik.covid.MainActivity;
+import com.andraskesik.covid.activities.MainActivity;
 import com.andraskesik.covid.R;
 import com.andraskesik.covid.model.Video;
 import com.google.android.gms.tasks.OnFailureListener;

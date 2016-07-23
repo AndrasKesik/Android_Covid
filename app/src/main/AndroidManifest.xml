@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity"
+        <activity android:name=".activities.SignUpActivity"
             android:theme="@style/LoginTheme"/>
-        <activity android:name=".SignInActivity"
+        <activity android:name=".activities.SignInActivity"
             android:theme="@style/LoginTheme"/>
-        <activity android:name=".StartActivity"
+        <activity android:name=".activities.StartActivity"
             android:theme="@style/LoginTheme"/>
 
-        <activity android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".activities.SettingsActivity"
+            android:parentActivityName=".activities.MainActivity"/>
 
     </application>
 
