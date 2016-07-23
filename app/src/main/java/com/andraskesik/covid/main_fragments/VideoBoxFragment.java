@@ -12,12 +12,12 @@ import com.andraskesik.covid.R;
 /**
  * Created by andra on 2016-07-22.
  */
-public class WatchLaterFragment extends Fragment {
+public class VideoBoxFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_watchlater, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_videobox, container, false);
         getActivity().setTitle("Watch Later");
         return view;
     }

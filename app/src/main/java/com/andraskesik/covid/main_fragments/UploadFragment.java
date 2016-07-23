@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.andraskesik.covid.activities.MainActivity;
@@ -62,7 +63,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
     private CardView cardTakeVideo;
     private CardView cardChooseFromGallery;
     private DatabaseReference mDatabase;
-    private RelativeLayout mConainerView;
+    private ScrollView mConainerView;
     private LinearLayout mUploadView;
     private TextInputLayout mDescription;
 
@@ -72,7 +73,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_main_upload, container, false);
         mAct = ((MainActivity) getActivity());
         mAct.setTitle("Upload your video");
-        mConainerView = (RelativeLayout) view.findViewById(R.id.container_uploadFragment);
+        mConainerView = (ScrollView) view.findViewById(R.id.container_uploadFragment);
         mUploadView = (LinearLayout) view.findViewById(R.id.linearLayout_upload);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDescription = (TextInputLayout) view.findViewById(R.id.field_description);
