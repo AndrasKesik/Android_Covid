@@ -14,8 +14,17 @@ public class User implements Parcelable {
     private String city;
     private String country;
     private String introduction;
+    private boolean premium;
 
     public User() {
+    }
+
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
     }
 
     public String getName() {
@@ -69,12 +78,15 @@ public class User implements Parcelable {
                 '}';
     }
 
+
+
     protected User(Parcel in) {
         name = in.readString();
         age = in.readString();
         city = in.readString();
         country = in.readString();
         introduction = in.readString();
+        premium = in.readByte() != 0x00;
     }
 
     @Override
@@ -89,6 +101,7 @@ public class User implements Parcelable {
         dest.writeString(city);
         dest.writeString(country);
         dest.writeString(introduction);
+        dest.writeByte((byte) (premium ? 0x01 : 0x00));
     }
 
     @SuppressWarnings("unused")

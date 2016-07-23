@@ -22,6 +22,7 @@ public class LoginDataFragment extends Fragment implements View.OnClickListener 
     private TextInputLayout mEmail;
     private TextInputLayout mPassword;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class LoginDataFragment extends Fragment implements View.OnClickListener 
             case R.id.button_register_logindata:
                 Log.d(TAG, mActivity.getmUser().toString());
 //                Toast.makeText(getActivity(), mActivity.getmUser().toString(), Toast.LENGTH_SHORT).show();
-
+                mActivity.getmUser().setPremium(false);
                 ((SignUpActivity) getActivity()).createUser(
                                                             mEmail.getEditText().getText().toString(),
                                                             mPassword.getEditText().getText().toString());
