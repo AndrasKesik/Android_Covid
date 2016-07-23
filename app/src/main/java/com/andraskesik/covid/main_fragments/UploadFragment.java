@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +50,8 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
     private Uri mCurrentUri;
     private Button mUploadButton;
     private boolean isUploadVisible;
+    private CardView cardTakeVideo;
+    private CardView cardChooseFromGallery;
 
     @Nullable
     @Override
@@ -72,11 +76,23 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
 
 
         mUploadButton.setOnClickListener(this);
-        view.findViewById(R.id.button_makeVideo).setOnClickListener(this);
-        view.findViewById(R.id.button_chooseFromGallery).setOnClickListener(this);
+        cardTakeVideo = (CardView) view.findViewById(R.id.button_makeVideo);
+        cardChooseFromGallery = (CardView) view.findViewById(R.id.button_chooseFromGallery);
+        cardTakeVideo.setOnClickListener(this);
+        cardChooseFromGallery.setOnClickListener(this);
+
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cardTakeVideo.setElevation(5f);
+            cardChooseFromGallery.setElevation(5f);
+        }
+        super.onResume();
     }
 
     @Override

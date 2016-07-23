@@ -7,28 +7,79 @@
 
 
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
+        android:layout_marginTop="8dp"
+        android:id="@+id/button_makeVideo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
+        android:foreground="?android:attr/selectableItemBackground"
         >
-
-        <Button
-            android:id="@+id/button_makeVideo"
-            android:text="Take Video"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button_chooseFromGallery"
-            android:text="Open Gallery"
+            <Button
+
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+
+            <TextView
+                android:layout_weight="1"
+                android:text="Take a Video"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_marginTop="8dp"
+        android:id="@+id/button_chooseFromGallery"
+        android:layout_below="@id/button_makeVideo"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:foreground="?android:attr/selectableItemBackground"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+            <Button
+
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+
+            <TextView
+                android:layout_weight="1"
+                android:text="Choose from Gallery"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
 
     <Button
         android:id="@+id/button_upload"

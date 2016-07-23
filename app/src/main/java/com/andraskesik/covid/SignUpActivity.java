@@ -26,11 +26,8 @@ public class SignUpActivity extends BaseActivity{
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
-    private FragmentManager mFragmentManager;
     private User mUser;
-    private Fragment mContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +40,6 @@ public class SignUpActivity extends BaseActivity{
         if (savedInstanceState != null ){
             mUser = savedInstanceState.getParcelable(USER);
             Log.d(TAG, "User restored: " + mUser.toString());
-//            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.placeHolder_signup, mContent)
-//                    .commit();
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -71,7 +64,7 @@ public class SignUpActivity extends BaseActivity{
     }
 
 
-    public void createUser(final User user, final String email, String password) {
+    public void createUser(final String email, String password) {
         showProgressDialog();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -114,24 +107,8 @@ public class SignUpActivity extends BaseActivity{
         }
     }
 
-    public void callNextFragment(){
-
-
-    }
-
-    public Fragment getmContent() {
-        return mContent;
-    }
-
-    public void setmContent(Fragment mContent) {
-        this.mContent = mContent;
-    }
-
     public User getmUser() {
         return mUser;
     }
 
-    public void setmUser(User mUser) {
-        this.mUser = mUser;
-    }
 }

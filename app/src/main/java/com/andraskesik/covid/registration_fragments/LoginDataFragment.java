@@ -49,11 +49,11 @@ public class LoginDataFragment extends Fragment implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.button_register_logindata:
                 Log.d(TAG, mActivity.getmUser().toString());
-                Toast.makeText(getActivity(), mActivity.getmUser().toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), mActivity.getmUser().toString(), Toast.LENGTH_SHORT).show();
 
-//                ((SignUpActivity) getActivity()).createUser(mUser,
-//                                                            mEmail.getEditText().getText().toString(),
-//                                                            mPassword.getEditText().getText().toString());
+                ((SignUpActivity) getActivity()).createUser(
+                                                            mEmail.getEditText().getText().toString(),
+                                                            mPassword.getEditText().getText().toString());
                 break;
 
         }

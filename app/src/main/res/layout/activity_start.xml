@@ -3,70 +3,146 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.andraskesik.covid.StartActivity"
-    >
+    android:background="@android:color/darker_gray">
+
+    <ImageView
+        android:src="@drawable/sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_above="@+id/linearLayout" />
+
+
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:id="@+id/linearLayout_buttons">-->
+
+        <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Sign In"-->
+            <!--android:background="#9CCC65"-->
+            <!--android:id="@+id/button_start_signin"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Sign Up"-->
+            <!--android:background="#AED581"-->
+
+            <!--android:id="@+id/button_start_signup" />-->
+    <!--</LinearLayout>-->
+
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="To"-->
+
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:id="@+id/textView_to"-->
+        <!--android:textSize="32sp"-->
+        <!--android:layout_marginBottom="30dp"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Welcome"-->
+        <!--android:id="@+id/textView_welcome"-->
+        <!--android:textSize="32sp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_above="@id/textView_to"-->
+        <!--android:layout_marginBottom="30dp"/>-->
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:text="CoVid"-->
+        <!--android:layout_below="@id/textView_to"-->
+        <!--android:id="@+id/textView_covid"-->
+        <!--android:textSize="32sp" />-->
 
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:id="@+id/linearLayout_buttons">
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/linearLayout">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sign In"
-            android:background="#9CCC65"
+        <android.support.v7.widget.CardView
             android:id="@+id/button_start_signin"
-            />
-
-        <Button
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign Up"
-            android:background="#AED581"
+            android:layout_height="match_parent"
+            android:layout_marginRight="0.5dp"
+            android:foreground="?android:attr/selectableItemBackground"
 
-            android:id="@+id/button_start_signup" />
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+                <TextView
+                    android:text="Sign In"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"/>
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/button_start_signup"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0.5dp"
+            android:background="@drawable/bg_gradient_signin"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+
+                <TextView
+                    android:text="Sign Up"
+                    android:gravity="center"
+                    android:textSize="20sp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"/>
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="To"
-
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView_to"
-        android:textSize="32sp"
-        android:layout_marginBottom="30dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome"
-        android:id="@+id/textView_welcome"
-        android:textSize="32sp"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/textView_to"
-        android:layout_marginBottom="30dp"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="CoVid"
-        android:layout_below="@id/textView_to"
-        android:id="@+id/textView_covid"
-        android:textSize="32sp" />
-
 
 
 </RelativeLayout>
