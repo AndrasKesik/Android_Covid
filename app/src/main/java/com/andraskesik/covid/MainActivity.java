@@ -57,7 +57,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mDatabase;
-    private DatabaseReference mUserRef;
 
     private User mUser;
 
@@ -270,5 +269,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-
+    public FirebaseUser getmFirebaseUser() {
+        return mFirebaseUser;
+    }
 }

@@ -1,94 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/container_uploadFragment"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
-    >
+    android:orientation="vertical"
+    android:background="#9E9E9E"
+    android:padding="8dp">
 
-
-
-    <android.support.v7.widget.CardView
-        android:layout_marginTop="8dp"
-        android:id="@+id/button_makeVideo"
+    <LinearLayout
+        android:id="@+id/buttons_uploadFragment"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:foreground="?android:attr/selectableItemBackground"
-        >
-        <LinearLayout
-            android:orientation="horizontal"
+        android:layout_height="150dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:id="@+id/button_makeVideo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
 
-            <Button
+            android:layout_marginRight="4dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
 
-                android:layout_weight="3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-
-            <TextView
-                android:layout_weight="1"
-                android:text="Take a Video"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_marginTop="8dp"
-        android:id="@+id/button_chooseFromGallery"
-        android:layout_below="@id/button_makeVideo"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:foreground="?android:attr/selectableItemBackground"
-        >
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-
-                android:layout_weight="3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-
-            <TextView
-                android:layout_weight="1"
-                android:text="Choose from Gallery"
-                android:gravity="center"
-                android:textSize="22sp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:orientation="vertical">
+
+                <ImageView
+                    android:src="@drawable/take_video3"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="Take a Video"
+                    android:textSize="22sp" />
 
-        </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:id="@+id/button_chooseFromGallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginLeft="4dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:src="@drawable/open_gallery"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="Open Gallery"
+                    android:textSize="22sp" />
 
-    <Button
-        android:id="@+id/button_upload"
-        android:text="Upload"
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_upload"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/buttons_uploadFragment"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/button_watch_your_video"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                android:background="#616161"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_play_arrow_black_24dp"/>
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="24sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Watch Your Video"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="8dp"
+            android:id="@+id/button_upload"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:background="#616161"
+                    android:layout_weight="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_file_upload_black_24dp"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="24sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Upload"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="16dp"
+            android:id="@+id/field_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@android:color/transparent"
+                android:inputType="textCapSentences|textMultiLine"
+                android:hint="Description:"
+                android:maxLength="100"
+                android:textSize="24sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+
 
 
 
