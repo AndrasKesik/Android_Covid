@@ -10,16 +10,27 @@ public class Video {
     private String userId;
     private String downloadLink;
     private String description;
+    private String category;
     private List<String> premiun;
     private List<Comment> comments;
 
     public Video() {
     }
 
-    public Video(String userId, String downloadLink, String description, List<String> premiun, List<Comment> comments) {
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Video(String userId, String downloadLink, String description, String category, List<String> premiun, List<Comment> comments) {
+
         this.userId = userId;
         this.downloadLink = downloadLink;
         this.description = description;
+        this.category = category;
         this.premiun = premiun;
         this.comments = comments;
     }
@@ -70,6 +81,7 @@ public class Video {
                 "userId='" + userId + '\'' +
                 ", downloadLink='" + downloadLink + '\'' +
                 ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
                 ", premiun=" + premiun +
                 ", comments=" + comments +
                 '}';

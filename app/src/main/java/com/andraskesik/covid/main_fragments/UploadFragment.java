@@ -2,6 +2,7 @@ package com.andraskesik.covid.main_fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,12 +22,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.andraskesik.covid.activities.MainActivity;
 import com.andraskesik.covid.R;
+import com.andraskesik.covid.model.CovidConstants;
 import com.andraskesik.covid.model.Video;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -66,6 +68,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
     private ScrollView mConainerView;
     private LinearLayout mUploadView;
     private TextInputLayout mDescription;
+    private Video mVideo;
 
     @Nullable
     @Override
@@ -137,20 +140,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private ArrayList<String> extractFilesFromLocalStorage(final String fileExtension) {
-        ArrayList<String> items = new ArrayList<>();
-        File[] files = getContext().getFilesDir().listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                if (file.getAbsolutePath().contains(fileExtension)) return true;
-                else return false;
-            }
-        });
-        for (File f : files) {
-            items.add(f.getName());
-        }
-        return items;
-    }
+
 
     private void takeVideo() {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -195,10 +185,12 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 mDownloadUrl = taskSnapshot.getDownloadUrl();
                 Log.d(TAG, "fileUploadSucces: " + mDownloadUrl);
-                writeVideoToDb(makeVideoObject(taskSnapshot));
+                fillVideoObject(taskSnapshot);
+                writeVideoToDb(mVideo);
                 hideUpload();
                 mAct.hideProgressDialog();
                 Snackbar snackbar = Snackbar.make(mConainerView, "File uploaded :)", Snackbar.LENGTH_LONG);
+//                hideKeyboard();                      // TODO hide keyboard, this is not working
                 snackbar.show();
 
             }
@@ -210,12 +202,10 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
         mDatabase.child("videos").push().setValue(video);
     }
 
-    private Video makeVideoObject(UploadTask.TaskSnapshot taskSnapshot){
-        Video video = new Video();
-        video.setUserId(mAct.getmFirebaseUser().getUid());
-        video.setDownloadLink(taskSnapshot.getDownloadUrl().toString());  //nembiztos hogy megy
-        video.setDescription(mDescription.getEditText().getText().toString());
-        return video;
+    private void fillVideoObject(UploadTask.TaskSnapshot taskSnapshot){
+        mVideo.setUserId(mAct.getmFirebaseUser().getUid());
+        mVideo.setDownloadLink(taskSnapshot.getDownloadUrl().toString());  //nembiztos hogy megy
+        mVideo.setDescription(mDescription.getEditText().getText().toString());
     }
 
     public void hideKeyboard() {
@@ -231,19 +221,38 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.button_chooseFromGallery:
                 chooseFromGallery();
-                Toast.makeText(mAct, "choosefromGallery", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_watch_your_video:
                 watchVideo();
                 break;
             case R.id.button_upload:
-                upLoadFile(mCurrentUri);
+                chooseCategory();
                 break;
 
         }
     }
 
-    
+    private void chooseCategory() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mAct)
+            .setTitle("Video title.")
+
+            .setSingleChoiceItems(CovidConstants.CATEGORIES, -1, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    mVideo = new Video();
+                    mVideo.setCategory(CovidConstants.CATEGORIES[i]);
+                    Log.d(TAG, mVideo.toString());
+                }
+            })
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    upLoadFile(mCurrentUri);
+
+                }
+            });
+        builder.show();
+    }
 
 
     private void showUpload() {

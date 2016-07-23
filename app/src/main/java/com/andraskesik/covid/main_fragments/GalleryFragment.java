@@ -1,8 +1,10 @@
 package com.andraskesik.covid.main_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,8 +15,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.andraskesik.covid.CategoryViewHolder;
 import com.andraskesik.covid.R;
 import com.andraskesik.covid.VideoViewHolder;
+import com.andraskesik.covid.activities.CategoryActivity;
+import com.andraskesik.covid.activities.MainActivity;
+import com.andraskesik.covid.model.CovidConstants;
 import com.andraskesik.covid.model.Video;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -32,29 +38,56 @@ import java.util.ArrayList;
 public class GalleryFragment extends Fragment {
 
     private static final String TAG = GalleryFragment.class.getSimpleName();
-    private DatabaseReference mDatabase;
-    private DatabaseReference mRef;
-    private FirebaseRecyclerAdapter<Video, VideoViewHolder> mAdapter;
+    private MainActivity mAct;
+    private RecyclerView.Adapter<CategoryViewHolder> mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_main_gallery, container, false);
-        getActivity().setTitle("Gallery");
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mRef = mDatabase.child("videos");
+        mAct = (MainActivity) getActivity();
+        mAct.setTitle("Choose a Category");
+//        Intent categoryIntent = new Intent(getActivity(), CategoryActivity.class);
+//        categoryIntent.putExtra(CategoryActivity.CATEGORY, "Personal");
+//        startActivity(categoryIntent);
+
 
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView_gallery);
 //        recycler.setHasFixedSize(true);
-        recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recycler.setLayoutManager(new LinearLayoutManager(mAct));
+        mAdapter = new RecyclerView.Adapter<CategoryViewHolder>() {
 
-        mAdapter = new FirebaseRecyclerAdapter<Video, VideoViewHolder>(Video.class, android.R.layout.two_line_list_item, VideoViewHolder.class, mRef) {
             @Override
-            public void populateViewHolder(VideoViewHolder videoViewHolder, Video video, int position) {
-                Log.d(TAG, "populateviewHolder___________________");
-                videoViewHolder.setName(video.getDescription());
-                videoViewHolder.setText(video.getDownloadLink());
+            public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View itemView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.listitem_categories, parent, false);
+
+
+                return new CategoryViewHolder(itemView);
             }
+
+            @Override
+            public void onBindViewHolder(CategoryViewHolder holder, final int position) {
+                holder.setListener(new CategoryViewHolder.ICatgoryViewHolderClicks() {
+                    @Override
+                    public void openCategory() {
+                        Intent openCategoryIntent = new Intent(mAct, CategoryActivity.class);
+                        openCategoryIntent.putExtra(CategoryActivity.CATEGORY, CovidConstants.CATEGORIES[position]);
+                        startActivity(openCategoryIntent);
+                    }
+                });
+                holder.setLabelText(CovidConstants.CATEGORIES[position]);
+                Log.d(TAG, "populateviewHolder___________________");
+            }
+
+            @Override
+            public int getItemCount() {
+                return CovidConstants.CATEGORIES.length;
+            }
+
+
+
+
         };
         recycler.setAdapter(mAdapter);
 
@@ -62,9 +95,4 @@ public class GalleryFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mAdapter.cleanup();
-    }
 }

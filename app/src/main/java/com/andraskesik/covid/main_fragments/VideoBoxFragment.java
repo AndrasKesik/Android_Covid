@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 
 import com.andraskesik.covid.R;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+
 /**
  * Created by andra on 2016-07-22.
  */
@@ -22,4 +26,18 @@ public class VideoBoxFragment extends Fragment {
         return view;
     }
 
+    private ArrayList<String> extractFilesFromLocalStorage(final String fileExtension) {
+        ArrayList<String> items = new ArrayList<>();
+        File[] files = getContext().getFilesDir().listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                if (file.getAbsolutePath().contains(fileExtension)) return true;
+                else return false;
+            }
+        });
+        for (File f : files) {
+            items.add(f.getName());
+        }
+        return items;
+    }
 }

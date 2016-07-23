@@ -1,0 +1,64 @@
+package com.andraskesik.covid.activities;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+
+import com.andraskesik.covid.R;
+import com.andraskesik.covid.VideoViewHolder;
+import com.andraskesik.covid.model.Video;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+public class CategoryActivity extends AppCompatActivity {
+
+    public static final String CATEGORY = "CATEGORY";
+    private static final String TAG = CategoryActivity.class.getSimpleName();
+    private DatabaseReference mDatabase;
+    private DatabaseReference mRef;
+    private FirebaseRecyclerAdapter<Video, VideoViewHolder> mAdapter;
+    private String mCategory;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_category);
+        mCategory = getIntent().getStringExtra(CATEGORY);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        setTitle(mCategory + " Videos");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mRef = mDatabase.child("videos");
+
+        Query categoryQuery = mDatabase.child("videos").orderByChild("category").equalTo(mCategory);
+
+        RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerView_category);
+//        recycler.setHasFixedSize(true);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+
+        mAdapter = new FirebaseRecyclerAdapter<Video, VideoViewHolder>(Video.class, android.R.layout.two_line_list_item, VideoViewHolder.class, categoryQuery) {
+            @Override
+            public void populateViewHolder(VideoViewHolder videoViewHolder, Video video, int position) {
+                Log.d(TAG, "populateviewHolder___________________");
+                videoViewHolder.setName(video.getDescription());
+                videoViewHolder.setText(video.getDownloadLink());
+            }
+        };
+        recycler.setAdapter(mAdapter);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter.cleanup();
+    }
+}
