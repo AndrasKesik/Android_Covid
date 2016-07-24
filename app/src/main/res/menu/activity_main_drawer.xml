@@ -9,7 +9,7 @@
         <item
             android:id="@+id/nav_videobox"
             android:icon="@drawable/ic_video_library_black_24dp"
-            android:title="Your Videos" />
+            android:title="My Videos" />
         <item
             android:id="@+id/nav_watchlater"
             android:icon="@drawable/ic_watch_later_black_24dp"

@@ -79,7 +79,7 @@ public class MyVideos extends Fragment {
             @Override
             public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(android.R.layout.two_line_list_item, parent, false);
+                        .inflate(R.layout.listitem_video, parent, false);
 
                 return new VideoViewHolder(itemView);
             }

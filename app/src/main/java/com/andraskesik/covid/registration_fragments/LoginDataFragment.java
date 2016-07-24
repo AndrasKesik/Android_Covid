@@ -8,15 +8,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.andraskesik.covid.R;
 import com.andraskesik.covid.activities.SignUpActivity;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by andra on 2016-07-21.
  */
 public class LoginDataFragment extends Fragment implements View.OnClickListener {
 
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private static final String TAG = LoginDataFragment.class.getSimpleName();
     private SignUpActivity mActivity;
     private TextInputLayout mEmail;
@@ -43,6 +49,7 @@ public class LoginDataFragment extends Fragment implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_register_logindata:
+                if (!validateEmail() || !validatePassword()){return;}
                 Log.d(TAG, mActivity.getmUser().toString());
 //                Toast.makeText(getActivity(), mActivity.getmUser().toString(), Toast.LENGTH_SHORT).show();
                 mActivity.getmUser().setPremium(false);
@@ -51,6 +58,24 @@ public class LoginDataFragment extends Fragment implements View.OnClickListener 
                                                             mPassword.getEditText().getText().toString());
                 break;
 
+        }
+    }
+
+    private boolean validatePassword() {
+        if (mPassword.getEditText().getText().toString().length() < 6){
+            Toast.makeText(mActivity, "Password should be at least 6 char long", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean validateEmail() {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(mEmail.getEditText().getText().toString());
+        if (matcher.find()) return true;
+        else{
+            Toast.makeText(mActivity, "Email should be a valid email address", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 }
