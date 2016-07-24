@@ -12,6 +12,15 @@ import android.widget.Toast;
 
 import com.andraskesik.covid.R;
 import com.andraskesik.covid.activities.SignUpActivity;
+import com.andraskesik.covid.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,15 +59,42 @@ public class LoginDataFragment extends Fragment implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.button_register_logindata:
                 if (!validateEmail() || !validatePassword()){return;}
-                Log.d(TAG, mActivity.getmUser().toString());
-//                Toast.makeText(getActivity(), mActivity.getmUser().toString(), Toast.LENGTH_SHORT).show();
-                mActivity.getmUser().setPremium(false);
-                ((SignUpActivity) getActivity()).createUser(
-                                                            mEmail.getEditText().getText().toString(),
-                                                            mPassword.getEditText().getText().toString());
+                createNewUser();
+
                 break;
 
         }
+    }
+
+    private boolean createNewUser() {
+        String userEmail = mEmail.getEditText().getText().toString();
+        Log.d(TAG, userEmail);
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        Query userExistQuery = databaseRef.child("users").orderByChild("email").equalTo(userEmail);
+        userExistQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User u = dataSnapshot.getValue(User.class);
+                if (u == null){
+                    Log.d(TAG, "new user created: " + mActivity.getmUser().toString());
+                    mActivity.getmUser().setPremium(false);
+                    mActivity.getmUser().setEmail(mEmail.getEditText().getText().toString());
+                    mActivity.createUser(
+                            mEmail.getEditText().getText().toString(),
+                            mPassword.getEditText().getText().toString());
+
+                } else {
+                    Toast.makeText(mActivity, "Email is already taken" + u.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCanceled _______________", databaseError.toException());
+            }
+        });
+        Log.d(TAG, userExistQuery.toString());
+        return false;
     }
 
     private boolean validatePassword() {

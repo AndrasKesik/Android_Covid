@@ -42,8 +42,10 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
         mListener.openCategory();
     }
 
-    public static interface ICatgoryViewHolderClicks {
-        public void openCategory();
+
+
+    public interface ICatgoryViewHolderClicks {
+        void openCategory();
     }
 
 

@@ -33,10 +33,13 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/ActionbarTheme"/>
-        <activity android:name=".activities.CategoryActivity"
+            android:theme="@style/ActionbarTheme" />
+        <activity
+            android:name=".activities.CategoryActivity"
             android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/ActionbarTheme"></activity>
+            android:theme="@style/ActionbarTheme" />
+        <activity android:name=".activities.VideoActivity"
+           ></activity>
     </application>
 
 </manifest>

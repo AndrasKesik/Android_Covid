@@ -76,7 +76,7 @@ public class GalleryFragment extends Fragment {
                     public void openCategory() {
                         Intent openCategoryIntent = new Intent(mAct, CategoryActivity.class);
                         openCategoryIntent.putExtra(CategoryActivity.CATEGORY, CovidConstants.CATEGORIES[position]);
-                        openCategoryIntent.putExtra(CategoryActivity.USERNAME, mAct.getmUser().getName());
+                        openCategoryIntent.putExtra(MainActivity.USERNAME, mAct.getmUser().getName());
                         startActivity(openCategoryIntent);
                     }
                 });

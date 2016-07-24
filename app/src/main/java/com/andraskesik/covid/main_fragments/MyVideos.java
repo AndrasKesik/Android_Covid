@@ -89,7 +89,8 @@ public class MyVideos extends Fragment {
                 Video video = mVideoList.get(position);
                 Log.d(TAG, "populateviewHolder___________________");
                 holder.setDescription(video.getDescription());
-                holder.setDownloadLink(video.getDownloadLink());
+                holder.setUploaderName(video.getUserName());
+//                holder.setDownloadLink(video.getDownloadLink());
             }
 
             @Override

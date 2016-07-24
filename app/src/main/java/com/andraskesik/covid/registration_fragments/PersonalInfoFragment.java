@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.andraskesik.covid.R;
 import com.andraskesik.covid.activities.SignUpActivity;
@@ -85,6 +86,10 @@ public class PersonalInfoFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_next_register_personalinfo:
+                if(mName.getEditText().getText().toString().length() < 3 ) {
+                    Toast.makeText(mActivity, "Name must be at least 3 char long", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 saveDatatoUser();
                 callIntroductionFragment();
                 return;

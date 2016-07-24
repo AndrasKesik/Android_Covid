@@ -15,8 +15,17 @@ public class User implements Parcelable {
     private String country;
     private String introduction;
     private boolean premium;
+    private String email;
 
     public User() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean isPremium() {
@@ -87,6 +96,7 @@ public class User implements Parcelable {
         country = in.readString();
         introduction = in.readString();
         premium = in.readByte() != 0x00;
+        email = in.readString();
     }
 
     @Override
@@ -102,6 +112,7 @@ public class User implements Parcelable {
         dest.writeString(country);
         dest.writeString(introduction);
         dest.writeByte((byte) (premium ? 0x01 : 0x00));
+        dest.writeString(email);
     }
 
     @SuppressWarnings("unused")

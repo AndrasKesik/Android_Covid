@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -38,7 +39,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String RECENT_FRAGMENT = "RECENT_FRAGMENT";
-
+    public static final String USERNAME = "USERNAME";
     //Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -53,6 +54,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView drawerName;
     private TextView drawerEmail;
     private Fragment mContent;
+    private FragmentTransaction mFragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +66,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setSupportActionBar(toolbar);
         setupDrawer();
         setStatusBarTranslucent(true);
-
-        //Get the content for the UI
-        if (savedInstanceState != null ){
-            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_main, mContent)
-                    .commit();
-        } else {
-            mContent = new GalleryFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_main, mContent)
-                    .commit();
-        }
-
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
@@ -92,6 +80,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         getUserFromDb();
+
+        //Get the content for the UI
+        if (savedInstanceState != null ){
+            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+            mFragmentTransaction = getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_main, mContent);
+
+        } else {
+            mContent = new GalleryFragment();
+            mFragmentTransaction = getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_main, mContent);
+
+        }
 
 
         // Firebase Auth_state_listener
@@ -208,23 +209,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void getUserFromDb() {
+        showProgressDialog();
         mDatabase.child("users").child(mFirebaseUser.getUid())
                 .addListenerForSingleValueEvent(
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+
                                 mUser = dataSnapshot.getValue(User.class);
+
 
                                 if (mUser == null) {
                                     Log.e(TAG, "User is unexpectedly null");
                                     Toast.makeText(MainActivity.this,
-                                            "Error: could not fetch user.",
+                                            "Error: Mainactivity could not fetch user.",
                                             Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(MainActivity.this, StartActivity.class));
-                                    finish();
+//                                    startActivity(new Intent(MainActivity.this, StartActivity.class));
+//                                    finish();
                                 } else {
                                     drawerName.setText(mUser.getName());
                                     drawerEmail.setText(mFirebaseUser.getEmail());
+                                    mFragmentTransaction.commit();
+                                    hideProgressDialog();
                                 }
                             }
                             @Override

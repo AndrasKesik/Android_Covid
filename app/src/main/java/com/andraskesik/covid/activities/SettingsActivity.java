@@ -27,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingsActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
     public static final String NAME = "Name";
@@ -194,7 +194,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                                 if (mUser == null) {
                                     Log.e(TAG, "User is unexpectedly null");
                                     Toast.makeText(SettingsActivity.this,
-                                            "Error: could not fetch user.",
+                                            "Error: SettingsActivity could not fetch user.",
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     setViews();
@@ -262,7 +262,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onPause() {
         super.onPause();
-        if(mFirebaseUser != null) {
+        if(mFirebaseUser != null && mUser!=null) {
             refreshUserData();
         }
     }

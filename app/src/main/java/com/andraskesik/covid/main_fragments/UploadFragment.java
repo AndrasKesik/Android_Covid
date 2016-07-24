@@ -206,6 +206,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
         mVideo.setUserId(mAct.getmFirebaseUser().getUid());
         mVideo.setDownloadLink(taskSnapshot.getDownloadUrl().toString());  //nembiztos hogy megy
         mVideo.setDescription(mDescription.getEditText().getText().toString());
+        mVideo.setUserName(mAct.getmUser().getName());
     }
 
     public void hideKeyboard() {
