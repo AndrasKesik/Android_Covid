@@ -14,6 +14,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
             >
 
 
@@ -25,7 +26,7 @@
                 android:layout_height="200dp">
 
                 <ImageView
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_gravity="center"
                     android:minWidth="75dp"
                     android:minHeight="75dp"
@@ -35,16 +36,21 @@
 
                 <TextView
                     android:id="@+id/profile_name"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     android:layout_gravity="center"
-                    android:text="Andras"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/profile_premium"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
                     android:id="@+id/profile_email"
                     android:layout_gravity="center"
-                    android:text="andras.kesik@gmail.com"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -62,7 +68,16 @@
                     android:layout_height="56dp"
                   >
                     <Button
-                        android:id="@+id/settings_resetpassword"
+                        android:id="@+id/settings_premium"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Premium"/>
+                    <Button
+                        android:id="@+id/settings_changePassword"
                         android:layout_alignParentRight="true"
                         android:textSize="12sp"
                         android:layout_width="wrap_content"
@@ -78,6 +93,7 @@
                     >
                     <TextView
                         android:text="Name:"
+
                         android:layout_alignParentLeft="true"
                         android:layout_marginTop="8dp"
                         android:layout_marginLeft="16dp"
@@ -85,16 +101,18 @@
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/settings_name"
-                        android:gravity="center"
+                        android:gravity="bottom|center_horizontal"
                         android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text=""/>
                     <ImageView
                         android:id="@+id/settings_change_name"
                         android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_gravity="center"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -116,16 +134,18 @@
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/settings_age"
-                        android:gravity="center"
+                        android:gravity="bottom|center_horizontal"
                         android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text=""/>
                     <ImageView
                         android:id="@+id/settings_change_age"
                         android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_gravity="center"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -145,8 +165,9 @@
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/settings_city"
-                        android:gravity="center"
+                        android:gravity="bottom|center_horizontal"
                         android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text=""/>
@@ -154,8 +175,9 @@
                         android:id="@+id/settings_change_city"
                         android:layout_marginRight="16dp"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_gravity="center"
+                        android:layout_marginBottom="8dp"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:background="@drawable/ic_edit_black_24dp"/>
@@ -174,8 +196,9 @@
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/settings_country"
-                        android:gravity="center"
+                        android:gravity="bottom|center_horizontal"
                         android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text=""/>
@@ -183,9 +206,10 @@
                         android:id="@+id/settings_change_country"
                         android:layout_marginRight="16dp"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_gravity="center"
                         android:layout_width="25dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_height="25dp"
                         android:background="@drawable/ic_edit_black_24dp"/>
                 </RelativeLayout>
@@ -199,7 +223,8 @@
                     <TextView
                         android:text="Introduction:"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -209,8 +234,9 @@
                         android:layout_marginTop="16dp"
                         android:id="@+id/settings_change_introduction"
                         android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_gravity="center"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -219,12 +245,12 @@
 
                 <TextView
                     android:id="@+id/settings_introduction"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="36dp"
                     android:layout_marginRight="24dp"
                     android:textSize="18sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text=""/>
+                    />
 
             </LinearLayout>
 

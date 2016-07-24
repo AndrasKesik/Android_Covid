@@ -16,14 +16,19 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
         mView = itemView;
     }
 
-    public void setName(String name) {
-        TextView field = (TextView) mView.findViewById(android.R.id.text1);
+    public void setUserName(String name) {
+        TextView field = (TextView) mView.findViewById(R.id.videocard_userid);
         field.setText(name);
     }
 
-    public void setText(String text) {
-        TextView field = (TextView) mView.findViewById(android.R.id.text2);
-        field.setText(text);
+    public void setDescription(String description) {
+        TextView field = (TextView) mView.findViewById(R.id.videocard_description);
+        field.setText(description);
+    }
+
+    public void setDownloadLink(String downloadLink){
+        TextView field = (TextView) mView.findViewById(R.id.videocard_downloadlink);
+        field.setText(downloadLink);
     }
 
 

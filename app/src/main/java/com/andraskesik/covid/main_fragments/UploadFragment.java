@@ -234,7 +234,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
 
     private void chooseCategory() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mAct)
-            .setTitle("Video title.")
+            .setTitle("Choose a category")
 
             .setSingleChoiceItems(CovidConstants.CATEGORIES, -1, new DialogInterface.OnClickListener() {
                 @Override

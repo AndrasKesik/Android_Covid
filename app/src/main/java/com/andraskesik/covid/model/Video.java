@@ -11,7 +11,7 @@ public class Video {
     private String downloadLink;
     private String description;
     private String category;
-    private List<String> premiun;
+    private List<String> premium;
     private List<Comment> comments;
 
     public Video() {
@@ -25,13 +25,13 @@ public class Video {
         this.category = category;
     }
 
-    public Video(String userId, String downloadLink, String description, String category, List<String> premiun, List<Comment> comments) {
+    public Video(String userId, String downloadLink, String description, String category, List<String> premium, List<Comment> comments) {
 
         this.userId = userId;
         this.downloadLink = downloadLink;
         this.description = description;
         this.category = category;
-        this.premiun = premiun;
+        this.premium = premium;
         this.comments = comments;
     }
 
@@ -59,12 +59,12 @@ public class Video {
         this.description = description;
     }
 
-    public List<String> getPremiun() {
-        return premiun;
+    public List<String> getPremium() {
+        return premium;
     }
 
-    public void setPremiun(List<String> premiun) {
-        this.premiun = premiun;
+    public void setPremium(List<String> premium) {
+        this.premium = premium;
     }
 
     public List<Comment> getComments() {
@@ -82,7 +82,7 @@ public class Video {
                 ", downloadLink='" + downloadLink + '\'' +
                 ", description='" + description + '\'' +
                 ", category='" + category + '\'' +
-                ", premiun=" + premiun +
+                ", premium=" + premium +
                 ", comments=" + comments +
                 '}';
     }

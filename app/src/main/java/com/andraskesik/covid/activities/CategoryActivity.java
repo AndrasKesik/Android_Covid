@@ -11,6 +11,8 @@ import com.andraskesik.covid.R;
 import com.andraskesik.covid.VideoViewHolder;
 import com.andraskesik.covid.model.Video;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -19,16 +21,21 @@ public class CategoryActivity extends AppCompatActivity {
 
     public static final String CATEGORY = "CATEGORY";
     private static final String TAG = CategoryActivity.class.getSimpleName();
+    public static final String USERNAME = "USERNAME";
     private DatabaseReference mDatabase;
     private DatabaseReference mRef;
     private FirebaseRecyclerAdapter<Video, VideoViewHolder> mAdapter;
     private String mCategory;
+    private String mUserName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         mCategory = getIntent().getStringExtra(CATEGORY);
+        mUserName = getIntent().getStringExtra(USERNAME);
+
 
         setTitle(mCategory + " Videos");
 
@@ -41,12 +48,13 @@ public class CategoryActivity extends AppCompatActivity {
 //        recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new FirebaseRecyclerAdapter<Video, VideoViewHolder>(Video.class, android.R.layout.two_line_list_item, VideoViewHolder.class, categoryQuery) {
+        mAdapter = new FirebaseRecyclerAdapter<Video, VideoViewHolder>(Video.class, R.layout.listitem_video, VideoViewHolder.class, categoryQuery) {
             @Override
             public void populateViewHolder(VideoViewHolder videoViewHolder, Video video, int position) {
                 Log.d(TAG, "populateviewHolder___________________");
-                videoViewHolder.setName(video.getDescription());
-                videoViewHolder.setText(video.getDownloadLink());
+                videoViewHolder.setUserName(mUserName);
+                videoViewHolder.setDescription(video.getDescription());
+                videoViewHolder.setDownloadLink(video.getDownloadLink());
             }
         };
         recycler.setAdapter(mAdapter);

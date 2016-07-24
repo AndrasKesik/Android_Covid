@@ -88,8 +88,8 @@ public class MyVideos extends Fragment {
             public void onBindViewHolder(VideoViewHolder holder, int position) {
                 Video video = mVideoList.get(position);
                 Log.d(TAG, "populateviewHolder___________________");
-                holder.setName(video.getDescription());
-                holder.setText(video.getDownloadLink());
+                holder.setDescription(video.getDescription());
+                holder.setDownloadLink(video.getDownloadLink());
             }
 
             @Override

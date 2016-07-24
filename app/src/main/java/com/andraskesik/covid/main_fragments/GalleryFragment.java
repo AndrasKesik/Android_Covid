@@ -48,12 +48,12 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_main_gallery, container, false);
         mAct = (MainActivity) getActivity();
-        mAct.setTitle("Choose a Category");
+        mAct.setTitle("Browse");
 //        Intent categoryIntent = new Intent(getActivity(), CategoryActivity.class);
 //        categoryIntent.putExtra(CategoryActivity.CATEGORY, "Personal");
 //        startActivity(categoryIntent);
-        CardView cardView = (CardView) view.findViewById(R.id.gallery_welcome);
-        cardView.setElevation(50f);
+//        CardView cardView = (CardView) view.findViewById(R.id.gallery_welcome);
+//        cardView.setElevation(50f);
 
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView_gallery);
 //        recycler.setHasFixedSize(true);
@@ -76,6 +76,7 @@ public class GalleryFragment extends Fragment {
                     public void openCategory() {
                         Intent openCategoryIntent = new Intent(mAct, CategoryActivity.class);
                         openCategoryIntent.putExtra(CategoryActivity.CATEGORY, CovidConstants.CATEGORIES[position]);
+                        openCategoryIntent.putExtra(CategoryActivity.USERNAME, mAct.getmUser().getName());
                         startActivity(openCategoryIntent);
                     }
                 });

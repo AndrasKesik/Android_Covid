@@ -22,7 +22,7 @@ public class VideoBoxFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_videobox, container, false);
-        getActivity().setTitle("Watch Later");
+        getActivity().setTitle("Your VideoBox");
         return view;
     }
 
@@ -39,5 +39,7 @@ public class VideoBoxFragment extends Fragment {
             items.add(f.getName());
         }
         return items;
+
+
     }
 }

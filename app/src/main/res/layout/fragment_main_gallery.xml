@@ -4,46 +4,46 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9E9E9E">
+    android:background="#212121">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/gallery_welcome"
-        android:layout_width="match_parent"
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:id="@+id/gallery_welcome"-->
+        <!--android:layout_width="match_parent"-->
 
 
-        app:cardCornerRadius="0dp"
-        android:layout_height="100dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/rsz_569787"
-                android:scaleType="centerCrop"
-                android:tint="#32000000" />
-        <TextView
+        <!--app:cardCornerRadius="0dp"-->
+        <!--android:layout_height="100dp">-->
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:src="@drawable/rsz_569787"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--android:tint="#b4000000" />-->
+        <!--<TextView-->
 
-            android:layout_marginLeft="36dp"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:text="Welcome"/>
+            <!--android:layout_marginLeft="36dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="24sp"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:text="Welcome"/>-->
 
-            <ImageView
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimary"/>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+            <!--<ImageView-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="@color/colorPrimary"/>-->
+        <!--</RelativeLayout>-->
+    <!--</android.support.v7.widget.CardView>-->
 
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+
 
         android:id="@+id/recyclerView_gallery"
         android:layout_width="match_parent"

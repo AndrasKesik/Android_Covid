@@ -154,10 +154,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 FirebaseAuth.getInstance().signOut();
                 return true;
             case R.id.item_mainmenu_about:
+                Toast.makeText(MainActivity.this, "Made by Andras Kesik", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.user_settings:
                 startActivity(new Intent(this, SettingsActivity.class).putExtra(USER, mUser));
 //                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -218,6 +220,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                     Toast.makeText(MainActivity.this,
                                             "Error: could not fetch user.",
                                             Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(MainActivity.this, StartActivity.class));
+                                    finish();
                                 } else {
                                     drawerName.setText(mUser.getName());
                                     drawerEmail.setText(mFirebaseUser.getEmail());
@@ -258,5 +262,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     public FirebaseUser getmFirebaseUser() {
         return mFirebaseUser;
+    }
+
+    public User getmUser() {
+        return mUser;
     }
 }
